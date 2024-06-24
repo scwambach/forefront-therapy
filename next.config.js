@@ -1,0 +1,45 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  env: {
+    SITE_URL: process.env.SITE_URL,
+    GOOGLE_MAP_API_KEY: process.env.GOOGLE_MAP_API_KEY,
+    PREVIEW_TOKEN: process.env.PREVIEW_TOKEN,
+  },
+  transpilePackages: ['@wambach-dev/react-library'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'source.unsplash.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fakeimg.pl',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+      },
+    ],
+  }
+}
+
+module.exports = nextConfig
