@@ -8,7 +8,10 @@ import {
   LinkObject,
   Box,
 } from '@wambach-dev/react-library'
-import { GlobalProps } from '@wambach-dev/react-library/src/utils/types'
+import {
+  GlobalProps,
+  ImageObjectProps,
+} from '@wambach-dev/react-library/src/utils/types'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -19,7 +22,7 @@ export const Header = ({
 }: {
   menu: GlobalProps['navigation']
   title: GlobalProps['siteTitle']
-  logo?: GlobalProps['logo']
+  logo?: ImageObjectProps
 }) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
