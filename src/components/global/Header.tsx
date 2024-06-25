@@ -1,6 +1,5 @@
 'use client'
 import {
-  Avatar,
   Button,
   Dropdown,
   Container,
@@ -10,20 +9,20 @@ import {
   Box,
 } from '@wambach-dev/react-library'
 import { GlobalProps } from '@wambach-dev/react-library/src/utils/types'
+import Image from 'next/image'
 import { useState } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
-
-// deploy
 
 export const Header = ({
   menu,
   title,
+  logo,
 }: {
   menu: GlobalProps['navigation']
   title: GlobalProps['siteTitle']
+  logo?: GlobalProps['logo']
 }) => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const { data: session } = useSession()
+
   return (
     <Box elementTag="header" className="wdrlscw-header">
       <Container>
@@ -37,7 +36,18 @@ export const Header = ({
         >
           <Heading level={1} nonHeadingElement="p">
             <LinkObject href="/" ariaLabel={title}>
-              {title}
+              {logo ? (
+                <Image
+                  className="logo"
+                  src={logo.src as string}
+                  blurDataURL={logo.blurDataURL}
+                  width={logo.width}
+                  height={logo.height}
+                  alt=""
+                />
+              ) : (
+                title
+              )}
             </LinkObject>
           </Heading>
 
@@ -64,27 +74,6 @@ export const Header = ({
                 )}
               </li>
             ))}
-            {session ? (
-              <>
-                {session.user && session.user.name && (
-                  <Avatar
-                    firstName={session.user?.name.split(' ')[0]}
-                    lastName={session.user?.name.split(' ')[1]}
-                    image={{
-                      src: session.user?.image as string,
-                      alt: session.user?.name as string,
-                    }}
-                  />
-                )}
-                <Button onClick={() => signOut()} type="button">
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <Button onClick={() => signIn()} type="button">
-                Sign In
-              </Button>
-            )}
           </Flex>
           <Button
             unstyled
