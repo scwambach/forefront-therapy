@@ -7,6 +7,7 @@ import {
 } from '@wambach-dev/react-library/src/utils/types'
 import { BLOG_ROLL_QUERY } from 'queries/blogRoll'
 import { GLOBAL_QUERY } from 'queries/global'
+import { notFound } from 'next/navigation'
 
 async function getData() {
   const globalData = await client.fetch(GLOBAL_QUERY)
@@ -42,23 +43,30 @@ export default async function Home() {
   } = await getData()
 
   const firstPost = blogData.posts[0]
+
+  if (!firstPost) {
+    return notFound()
+  }
+
   const allOtherPosts = blogData.posts.slice(1)
 
   return (
     <PageLayout global={globalData}>
-      <Banner
-        {...firstPost}
-        backgroundImage={firstPost.image}
-        heading={firstPost.title}
-        message={firstPost.description}
-        headingLevel={1}
-        links={[
-          {
-            label: 'Read More',
-            href: firstPost.href,
-          },
-        ]}
-      />
+      {firstPost && (
+        <Banner
+          {...firstPost}
+          backgroundImage={firstPost.image}
+          heading={firstPost.title}
+          message={firstPost.description}
+          headingLevel={1}
+          links={[
+            {
+              label: 'Read More',
+              href: firstPost.href,
+            },
+          ]}
+        />
+      )}
       <Cards
         heading="Blog Posts"
         items={allOtherPosts}
